@@ -17,6 +17,7 @@ App.prototype.setupHandlers = function() {
     this.onOfflineMessageHandler = this.onOfflineMessage.bind(this);
     this.onErrorMessageHandler = this.onErrorMessage.bind(this);
     this.batteryLevelHandler = this.batteryLevelHandler.bind(this);
+    this.lightLeftOnHandler = this.lightLeftOnHandler.bind(this);
 
     return this;
 };
@@ -25,6 +26,7 @@ App.prototype.createChildren = function() {
     this.box = document.querySelector('.box');
     this.icon = document.querySelector('.icon');
     this.battery = document.querySelector('.battery');
+    this.light = document.querySelector('.light');
 
     return this;
 };
@@ -37,6 +39,7 @@ App.prototype.enable = function() {
     socket.on('offline', this.onOfflineMessageHandler);
     socket.on('error', this.onErrorMessageHandler);
     socket.on('battery', this.batteryLevelHandler);
+    socket.on('light-left-on', this.lightLeftOnHandler);
 
     return this;
 };
@@ -53,30 +56,37 @@ App.prototype.onOpenMessage = function() {
 };
 
 App.prototype.onCloseMessage = function() {
-    this.box.classList.remove('box_isInActive');
-    this.icon.classList.remove('icon_isInActive');
-    this.icon.classList.remove('icon_isOffline');
+  this.box.classList.remove('box_isInActive');
+  this.icon.classList.remove('icon_isInActive');
+  this.icon.classList.remove('icon_isOffline');
 
-    this.box.classList.add('box_isActive');
-    this.icon.classList.add('icon_isActive');
+  this.box.classList.add('box_isActive');
+  this.icon.classList.add('icon_isActive');
 
-    return this;
+  return this;
 };
 
 App.prototype.onOfflineMessage = function() {
-    this.icon.classList.remove('icon_isInActive');
-    this.icon.classList.remove('icon_isActive');
+  this.icon.classList.remove('icon_isInActive');
+  this.icon.classList.remove('icon_isActive');
 
-    this.icon.classList.add('icon_isOffline');
+  this.icon.classList.add('icon_isOffline');
 
-    return this;
+  return this;
 };
 
 App.prototype.onErrorMessage = function(result) {
-    console.error('Server returned an error: ', result);
+  console.error('Server returned an error: ', result);
 
-    return this;
+  return this;
 };
+
+App.prototype.lightLeftOnHandler = function(result) {
+  if(result)
+    this.light.style.display = "block"
+  else
+    this.light.style.display = "none"
+}
 
 App.prototype.batteryLevelHandler = function(result) {
   var className = 'battery ';

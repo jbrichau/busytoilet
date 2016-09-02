@@ -2,7 +2,7 @@
     <head>
         <meta name="viewport" content="width=device-width, minimal-ui, user-scalable=no, initial-scale=1.0" />
         <meta charset="utf-8" />
-        <title>Restroom status</title>
+        <title>Yesplan Toiletkameraad</title>
         <style>
             body {
                 margin: 0;
@@ -40,6 +40,24 @@
 
             .icon {}
 
+            .icon_isInActive {
+                width: 207px;
+                height: 162px;
+                background: transparent url(assets/checkmark.svg) 0 0 no-repeat;
+            }
+
+            .icon_isActive {
+                width: 162px;
+                height: 162px;
+                background-image: url(assets/x.svg);
+            }
+
+            .icon_isOffline {
+                width: 100px;
+                height: 100px;
+                background-image: url(assets/offline.png);
+            }
+
             .battery {
               position:fixed;
               left: 20px;
@@ -64,22 +82,28 @@
               background: url(assets/battery-4.svg) 0 0 no-repeat;
             }
 
-            .icon_isInActive {
-                width: 207px;
-                height: 162px;
-                background: transparent url(assets/checkmark.svg) 0 0 no-repeat;
+            @keyframes blink {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
             }
-
-            .icon_isActive {
-                width: 162px;
-                height: 162px;
-                background-image: url(assets/x.svg);
-            }
-
-            .icon_isOffline {
-                width: 100px;
-                height: 100px;
-                background-image: url(assets/offline.png);
+            
+            .light {
+              position:fixed;
+              left: 20px;
+              top: 70px;
+              width: 64px;
+              height: 64px;
+              display: none;
+              animation: blink 1s;
+              animation-iteration-count: infinite;
+              background-image: url(assets/lightbulb-2-64.png);
             }
         </style>
         <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
@@ -88,6 +112,7 @@
         <div class="box">
             <span class="icon"></span>
             <span class="battery"></span>
+            <span class="light"></span>
         </div>
         <script src="assets/js/main.js"></script>
     </body>

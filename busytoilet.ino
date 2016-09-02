@@ -54,7 +54,7 @@ void setup() {
 
   motionTime = Time.now();
 
-  // Except the device turned on in light conditions
+  // Expect the device turned on in light conditions
   // Will compare against this value to see if it's 'dark'
   initialPhotosensorData = analogRead(PHOTOSENSOR_PIN) - 500;
 }
@@ -71,8 +71,8 @@ void checkLight() {
   {
     roomOccupied = true;
     doorClosed();
-    // room occupied while no movement detected for 15 minutes ?
-    if((Time.now() >= motionTime + 900))
+    // room occupied while no movement detected for 10 minutes ?
+    if((Time.now() >= motionTime + 600))
       lightLeftOn = true;
     else
       lightLeftOn = false;
